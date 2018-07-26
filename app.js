@@ -2,7 +2,7 @@ const Koa = require('koa');
 
 const bodyParser = require('koa-bodyparser');
 
-const controller = require('./controller');
+const controller = require('./middleware/controller');
 
 //const templating = require('./templating');
 
@@ -17,7 +17,7 @@ app.use(async (ctx, next) => {
 });
 
 // static file support:
-let staticFiles = require('./static-files');
+let staticFiles = require('./middleware/static-files');
 app.use(staticFiles('/static/', __dirname + '/static'));
 
 // parse request body:
