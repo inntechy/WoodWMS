@@ -1,2 +1,2 @@
 # WoodWMS
-node.js + express + ejs + BootStrap + MySq
+node.js + koa + MySql + RESTful
