@@ -12,7 +12,7 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
         idle: 30000
     }
 });
-
+//TO-DO modify ID_time, createAt
 module.exports = sequelize.define('inbound_notes', {
     ID_time: {
         type: Sequelize.BIGINT,
