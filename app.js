@@ -10,7 +10,7 @@ const rest = require('./middleware/rest');
 
 const app = new Koa();
 
-// log request URL: 
+// log request URL:
 app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
     await next();
