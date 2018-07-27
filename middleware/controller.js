@@ -27,11 +27,13 @@ function addMapping(router, mapping) {
 }
 
 function addControllers(router, dir) {
-    fs.readdirSync(__dirname + '/' + dir).filter((f) => {
+    //这句是为了解决将本文件放入middleware文件夹导致的controller路径识别错误
+    var controllers_path = __dirname.substring(0, __dirname.length-11);
+    fs.readdirSync(controllers_path + '/' + dir).filter((f) => {
         return f.endsWith('.js');
     }).forEach((f) => {
         console.log(`process controller: ${f}...`);
-        let mapping = require(__dirname + '/' + dir + '/' + f);
+        let mapping = require(controllers_path + '/' + dir + '/' + f);
         addMapping(router, mapping);
     });
 }
