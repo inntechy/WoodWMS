@@ -20,6 +20,10 @@ function addMapping(router, mapping) {
             var path = url.substring(7);
             router.del(path, mapping[url]);
             console.log(`register URL mapping: DELETE ${path}`);
+        } else if (url.startsWith('PATCH ')) {
+            var path = url.substring(6);
+            router.patch(path, mapping[url]);
+            console.log(`register URL mapping: PATCH ${path}`);
         } else {
             console.log(`invalid URL: ${url}`);
         }
