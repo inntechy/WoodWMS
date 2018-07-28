@@ -43,7 +43,7 @@
 ]
 ```
 
-###2. GET /api/Inbound_nots/:inid
+### 2. GET /api/Inbound_nots/:inid
 
 不发送内容，:inid用于索引（ID_time == :inid）的入库单，返回一个入库单如下。同样，需要用ID去索引items
 
@@ -93,9 +93,9 @@
 }
 ```
 
-###4. DELETE /api/Inbound_notes/:inid
+### 4. DELETE /api/Inbound_notes/:inid
 
-若ID正确，将删除数据后返回bool值。若ID错误，会返回如下错误码
+若ID正确，将删除数据后返回删除了几条记录。若ID错误，会返回如下错误码
 
 ```json
 {
@@ -103,4 +103,67 @@
     "message": "data not found"
 }
 ```
+
+### 5. POST /api/Inbound_items
+
+新建一个入库单子项目，传入如下数据，其中ID_time是入库单的ID，通过这个ID将子项与入库单联系起来
+
+```json
+{
+	"ID_time": 1532744699830,
+	"thickness": 38,
+	"width": 125,
+	"length": 4.000,
+	"pcs": 224,
+	"volume": 4.256
+}
+```
+
+返回数据是完整的子项实例，包括ID和createAt。
+
+```json
+{
+    "ID_time": 1532744699830,
+    "thickness": 38,
+    "width": 125,
+    "length": 4,
+    "pcs": 224,
+    "volume": 4.256,
+    "ID": 1532748576118,
+    "createAt": "2018-7-28 11:29:36"
+}
+```
+
+### 6. GET /api/Inbound_items/id=:id
+
+通过ID，获取单个子项实例
+
+例如`GET 127.0.0.1:3000/api/Inbound_items/id=1532752515398 `返回
+
+```json
+{
+    "ID": 1532752515398,
+    "createAt": "2018-7-28 12:35:15",
+    "ID_time": 1532744699830,
+    "thickness": 38,
+    "width": 125,
+    "length": 4,
+    "pcs": 224,
+    "volume": 4.256
+}
+```
+
+### 7. GET /api/Inbound_items/inid=:inid
+
+通过对比ID_time获取一个入库单上所有的子项
+
+### 8. DELETE /api/Inbound_items/id=:id
+
+删除对应ID的子项，成功返回删除了几条记录（此处应该是1），失败返回错误信息
+
+### 9. DELETE /api/Inbound_items/inid=:inid
+
+删除对应ID的入库单的所有子项，成功后会返回一个数字，显示删除了几条信息，失败返回相应的错误信息。
+
+
 
