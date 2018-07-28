@@ -2,7 +2,7 @@ grant all privileges on test.* to 'www'@'%' identified by 'www';
 
 use test;
 
-create table inbound_note (
+create table inbound_notes (
     ID_time 		bigint not null,
     createAt        varchar(20) not null,
     container_id 	varchar(100) not null,
@@ -15,9 +15,10 @@ create table inbound_note (
     primary key (ID_time)
 ) engine=innodb;
 
-create table inbound_item (
+create table inbound_items (
     ID bigint not null,
     ID_time bigint not null,
+    createAt varchar(20) not null,
     thickness int not null,
     width int not null,
     length float not null,
@@ -26,14 +27,14 @@ create table inbound_item (
     primary key (ID)
 ) engine = innodb;
 
-create table delivery_note (
+create table delivery_notes (
     id_delivery 	varchar(50) not null,
     editor 	 	varchar(100) not null,
     total_price 	float not null,
     primary key (id_delivery)
 ) engine=innodb;
 
-create table delivery_item (
+create table delivery_items (
     id 		varchar(50) not null,
     unitprice 	float not null,
     amount 	float not null,
