@@ -165,5 +165,131 @@
 
 删除对应ID的入库单的所有子项，成功后会返回一个数字，显示删除了几条信息，失败返回相应的错误信息。
 
+### 10. PATCH /api/Inbound_items
 
+更新部分键值，需要传入items的ID
+
+样例输入
+
+```json
+{
+	"pcs": 880,
+    "volume": 80,
+    "ID": 1532769789887
+}
+```
+
+返回
+
+[1]代表更改了一个对应item
+
+[0]表示未更改任何值
+
+错误信息可能是不存在该ID
+
+### 11. POST /api/Delivery_notes
+
+新建一个送货单，需要传入所有数据（其实就editor和total_price）
+
+```json
+{
+	"editor": "张三",
+	"total_price": 2039.42
+}
+```
+
+返回一个完整的送货单
+
+```json
+{
+    "editor": "张三",
+    "total_price": 2039.42,
+    "id_delivery": 1532848751822,
+    "createAt": "2018-7-29 15:19:11"
+}
+```
+
+### 12. GET /api/Delivery_notes/deid=:deid
+
+根据ID查找送货单，返回一个完整的送货单
+
+### 13. GET /api/Delivery_notes
+
+获取所有送货单，返回一个JSON数组
+
+### 14. DEL /api/Delivery_notes/deid=:deid
+
+删除对应ID的送货单，若成功返回一个`1`失败则返回错误信息
+
+### 15. PATCH /api/Delivery_notes/deid=:deid
+
+发送要修改的信息如下
+
+```json
+{
+	"editor": "李四",
+    "total_price": 2039.42
+}
+```
+
+若修改成功，返回一个
+
+```json
+[
+    1
+]
+```
+
+若发送的信息与原来相同，则不进行修改，返回
+
+```json
+[
+    0
+]
+```
+
+若ID不正确，则返回
+
+```json
+{
+    "code": "database:data not found",
+    "message": "data not found"
+}
+```
+
+### 16. POST /api/Delivery_items
+
+发送除ID和时间戳之外的内容
+
+```json
+{
+	"id_delivery": 1532827816652,
+	"thickness": 38,
+	"width": 125,
+	"length": 4.000,
+	"pcs": 224,
+	"volume": 4.256,
+	"unitprice": 555,
+	"amount": 32344.23,
+	"remarks": "没有备注"
+}
+```
+
+成功后返回一个完整的item
+
+### 17. GET /api/Delivery_items/id=:id
+
+不发送内容，通过ID查询该item的内容。返回一个完整的item
+
+### 18. GET /api/Delivery_items/deid=:deid
+
+不发送内容，返回一个item的列表
+
+### 19. DEL /api/Delivery_items/id=:id
+
+删除对应ID的item，若成功返回一个1
+
+### 20. PATCH /api/Delivery_items
+
+发送包含ID在内的内容，返回1代表修改了一条记录
 
