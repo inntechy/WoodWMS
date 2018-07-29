@@ -2,6 +2,7 @@ const APIError = require('../middleware/rest').APIError;
 const Inbound_note = require('../modules/inbound_notes');
 const Inbound_item = require('../modules/inbound_items');
 const Delivery_note = require('../modules/delivery_notes');
+const Delivery_item = require('../modules/delivery_items');
 
 module.exports = {
     //获取入库单列表
@@ -117,7 +118,7 @@ module.exports = {
         }
         await next();
     },
-    //删除送货单上所有的items
+    //删除入库单上所有的items
     'DELETE /api/Inbound_items/inid=:inid':async (ctx, next) => {
         var inid = ctx.params.inid;
         if(await Inbound_note.findById(inid)){
@@ -207,6 +208,77 @@ module.exports = {
         if(await Delivery_note.findById(deid)){
             var return_Data = await Delivery_note.update(data,{where:{
                     id_delivery:deid
+                }
+            });
+            ctx.rest(return_Data);
+        }else{
+            throw new APIError('database:data not found', 'data not found');
+        }
+        await next();
+    },
+    'POST /api/Delivery_items':async (ctx,next) => {
+        var data = ctx.request.body;
+        if(data != null){
+            var mdate = new Date();
+            data.ID = Date.now();
+            data.createAt = mdate.toLocaleString();
+            //console.log(data);
+            var return_data = await Delivery_item.create(data);
+            ctx.rest(return_data);
+            console.log('Delivery_item created');
+        }else{
+            throw new APIError('database:data is emputy', 'input invalid');
+        }
+        await next();
+    },
+    //
+    'GET /api/Delivery_items/id=:id':async (ctx, next) => {
+        var id = ctx.params.id;
+        var data = await Delivery_item.findById(id);
+        if(data != null){
+            ctx.rest(data);
+        }else{
+            throw new APIError('database:data not found', 'data not found');
+        }
+        await next();
+    },
+    //返回对应ID送货单上的所有子项
+    'GET /api/Delivery_items/deid=:deid':async (ctx, next) => {
+        var deid = ctx.params.deid;
+        var data = await Delivery_item.findAll({
+            where:{
+                id_delivery:deid
+            }
+        });
+        if(data != null){
+            ctx.rest(data);
+        }else{
+            throw new APIError('database:data not found', 'data not found');
+        }
+        await next();
+    },
+    //根据ID删除送货单items
+    'DELETE /api/Delivery_items/id=:id':async (ctx, next) => {
+        var id = ctx.params.id;
+        if(await Delivery_item.findById(id)){
+            var return_Data = await Delivery_item.destroy({
+                where:{
+                    ID:id
+                }
+            })
+            ctx.rest(return_Data);
+            console.log('Inbound_item deleted');
+        }else{
+            throw new APIError('database:data not found', 'data not found');
+        }
+        await next();
+    },
+    //更新对应ID的item
+    'PATCH /api/Delivery_items':async (ctx, next) => {
+        var data = ctx.request.body;
+        if(await Delivery_item.findById(data.ID)){
+            var return_Data = await Delivery_item.update(data,{where:{
+                    ID:data.ID
                 }
             });
             ctx.rest(return_Data);
