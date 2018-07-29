@@ -28,14 +28,16 @@ create table inbound_items (
 ) engine = innodb;
 
 create table delivery_notes (
-    id_delivery 	varchar(50) not null,
-    editor 	 	varchar(100) not null,
+    id_delivery 	bigint not null,
+    createAt    varchar(20) not null,
+    editor 	 	varchar(20) not null,
     total_price 	float not null,
     primary key (id_delivery)
 ) engine=innodb;
 
 create table delivery_items (
-    id 		varchar(50) not null,
+    id 		bigint not null,
+    createAt    varchar(20) not null,
     unitprice 	float not null,
     amount 	float not null,
     id_delivery 	varchar(50) not null,
