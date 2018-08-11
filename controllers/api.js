@@ -43,6 +43,10 @@ module.exports = {
         }
         await next();
     },
+    //修改一个入库单
+    'PATCH /api/Inbound_notes/:inid':async (ctx, next) => {
+        
+    },
     //删除一个入库单
     'DELETE /api/Inbound_notes/:inid':async (ctx, next) => {
         var id = ctx.params.inid;
