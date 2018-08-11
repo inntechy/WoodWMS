@@ -45,7 +45,17 @@ module.exports = {
     },
     //修改一个入库单
     'PATCH /api/Inbound_notes/:inid':async (ctx, next) => {
-        
+        var data = ctx.request.body;
+        if(await Inbound_note.findById(data.ID_time)){
+            var return_Data = await Inbound_note.update(data,{where:{
+                    ID: data.ID_time
+                }
+            });
+            ctx.rest(return_Data);
+        }else{
+            throw new APIError('database:data not found', 'data not found');
+        }
+        await next();
     },
     //删除一个入库单
     'DELETE /api/Inbound_notes/:inid':async (ctx, next) => {
