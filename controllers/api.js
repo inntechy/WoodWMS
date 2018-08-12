@@ -43,7 +43,7 @@ module.exports = {
         }
         await next();
     },
-    //修改一个入库单
+    //修改更新一个入库单
     'PATCH /api/Inbound_notes/':async (ctx, next) => {
         var data = ctx.request.body;
         if(await Inbound_note.findById(data.ID_time)){
@@ -301,4 +301,21 @@ module.exports = {
         }
         await next();
     },
+    // 根据货号（goods_mark）获取对应的入库单子项规格
+    'GET /api/Inbound_items/goods_mark=:goods_mark':async (ctx, next) => {
+        var goods_mark = ctx.params.goods_mark;
+        var return_data = [];
+        var items_inbound_id_list = await Inbound_note.findAll({
+            attributes: ['ID_time'],
+            where: { goods_mark: goods_mark }
+        });
+        for (var index in items_inbound_id_list) {
+            return_data[index] = await Inbound_item.findAll({
+                attributes: ['ID', 'thickness', 'width', 'length', 'pcs'],
+                where: { ID_time: items_inbound_id_list[index].ID_time }
+            });
+        }
+        ctx.rest(return_data);
+        await next();
+    }
 }
