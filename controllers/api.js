@@ -311,7 +311,7 @@ module.exports = {
         });
         for (var index in items_inbound_id_list) {
             return_data[index] = await Inbound_item.findAll({
-                attributes: ['ID', 'thickness', 'width', 'length', 'pcs'],
+                attributes: ['ID', 'thickness', 'width', 'length', 'pcs', 'soldpcs'],
                 where: { ID_time: items_inbound_id_list[index].ID_time }
             });
         }
