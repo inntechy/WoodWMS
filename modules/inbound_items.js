@@ -19,6 +19,7 @@ module.exports = sequelize.define('inbound_items', {
         primaryKey: true
     },
     createAt: Sequelize.STRING(20),
+    soldpcs: Sequelize.INTEGER,
     ID_time: Sequelize.BIGINT,
     thickness: Sequelize.INTEGER,
     width: Sequelize.INTEGER,

@@ -81,6 +81,7 @@ module.exports = {
             var mdate = new Date();
             data.ID = Date.now();
             data.createAt = mdate.toLocaleString();
+            data.soldpcs = 0;
             //console.log(data);
             var return_data = await Inbound_item.create(data);
             ctx.rest(return_data);

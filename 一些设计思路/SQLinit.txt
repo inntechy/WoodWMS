@@ -19,6 +19,7 @@ create table inbound_items (
     ID bigint not null,
     ID_time bigint not null,
     createAt varchar(20) not null,
+    soldpcs int not null,
     thickness int not null,
     width int not null,
     length float not null,
