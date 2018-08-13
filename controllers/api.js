@@ -16,7 +16,7 @@ module.exports = {
         await next();
     },
     //获取特定ID的入库单
-    'GET /api/Inbound_notes/:inid':async (ctx, next) => {
+    'GET /api/Inbound_notes/inid=:inid':async (ctx, next) => {
         var id = ctx.params.inid;
         //console.log('id=' + id);
         var data = await Inbound_note.findById(id);
@@ -301,21 +301,13 @@ module.exports = {
         }
         await next();
     },
-    // 根据货号（goods_mark）获取对应的入库单子项规格
-    'GET /api/Inbound_items/goods_mark=:goods_mark':async (ctx, next) => {
+    // 根据货号（goods_mark）获取对应的入库单信息
+    'GET /api/Inbound_notes/goods_mark=:goods_mark':async (ctx, next) => {
         var goods_mark = ctx.params.goods_mark;
-        var return_data = [];
         var items_inbound_id_list = await Inbound_note.findAll({
-            attributes: ['ID_time'],
             where: { goods_mark: goods_mark }
         });
-        for (var index in items_inbound_id_list) {
-            return_data[index] = await Inbound_item.findAll({
-                attributes: ['ID', 'thickness', 'width', 'length', 'pcs', 'soldpcs'],
-                where: { ID_time: items_inbound_id_list[index].ID_time }
-            });
-        }
-        ctx.rest(return_data);
+        ctx.rest(items_inbound_id_list);
         await next();
     }
 }
