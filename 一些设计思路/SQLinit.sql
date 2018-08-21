@@ -1,5 +1,7 @@
 grant all privileges on test.* to 'www'@'%' identified by 'www';
 
+create database test;
+
 use test;
 
 create table inbound_notes (
@@ -16,8 +18,8 @@ create table inbound_notes (
 ) engine=innodb;
 
 create table inbound_items (
-    ID bigint not null,
-    ID_time bigint not null,
+    `ID` bigint not null,
+    `ID_time` bigint not null,
     createAt varchar(20) not null,
     soldpcs int not null default 0,
     thickness int not null,
