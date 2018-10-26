@@ -17,6 +17,7 @@ node.js + vue + MySql + RESTful
 3. **打印报表：**入库单，出库单
 
 4. **储存操作日志**
+
 ![image](https://github.com/inntechy/WoodWMS/blob/master/%E4%B8%80%E4%BA%9B%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/image/process.jpg)
 
 [API设计](https://github.com/inntechy/WoodWMS/blob/master/%E4%B8%80%E4%BA%9B%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/RESTful%20API.md)
