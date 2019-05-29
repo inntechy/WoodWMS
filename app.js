@@ -12,6 +12,8 @@ const app = new Koa();
 
 // log request URL:
 app.use(async (ctx, next) => {
+    //处理跨域
+    ctx.set("Access-Control-Allow-Origin", "*");
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
     await next();
 });
